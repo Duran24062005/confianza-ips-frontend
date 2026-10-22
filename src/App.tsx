@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { type FormEvent, type ReactNode, useEffect, useMemo, useState } from 'react'
+import { Link, Route, Routes } from 'react-router-dom'
 import { authenticationService, api } from './infrastructure/composition'
 import type { Appointment, Dashboard, Doctor, Patient, Role, Service, Site, User } from './domain/models'
+import { ApiDocsDetail, ApiDocsIndex } from './docs/ApiDocsPage'
 
 type View = 'overview' | 'patients' | 'agenda' | 'clinical' | 'audit'
 
@@ -20,31 +22,10 @@ const statusLabels: Record<Appointment['status'], string> = {
   requested: 'Solicitada', confirmed: 'Confirmada', cancelled: 'Cancelada', completed: 'Completada', no_show: 'No asistió',
 }
 
-function App() {
-  const [user, setUser] = useState<User | null>(null)
+function DashboardApp({ user, onSignIn, booting, error, onSignOut, onError, onClearError }: { user: User | null; onSignIn: (email: string, password: string) => void; booting: boolean; error: string; onSignOut: () => void; onError: (message: string) => void; onClearError: () => void }) {
   const [view, setView] = useState<View>('overview')
-  const [booting, setBooting] = useState(false)
-  const [error, setError] = useState('')
 
-  async function signIn(email: string, password: string) {
-    setBooting(true)
-    setError('')
-    try {
-      setUser(await authenticationService.signIn(email, password))
-    } catch (reason) {
-      setError(reason instanceof Error ? reason.message : 'No fue posible iniciar sesión')
-    } finally {
-      setBooting(false)
-    }
-  }
-
-  async function signOut() {
-    try { await authenticationService.signOut() } catch { /* La sesión local se limpia aunque el servidor no responda. */ }
-    setUser(null)
-    setView('overview')
-  }
-
-  if (!user) return <LoginScreen onSubmit={signIn} busy={booting} error={error} />
+  if (!user) return <LoginScreen onSubmit={onSignIn} busy={booting} error={error} />
 
   const canSeeDashboard = user.role === 'admin' || user.role === 'receptionist'
   const availableViews: View[] = canSeeDashboard ? ['overview', 'patients', 'agenda', 'audit'] : ['agenda', 'clinical']
@@ -63,9 +44,10 @@ function App() {
             </button>
           ))}
         </nav>
+        <Link className="nav-item docs-nav-link" to="/docs"><span className="nav-icon">⌘</span>Documentación API</Link>
         <div className="sidebar-bottom">
           <div className="demo-note"><span className="pulse-dot" /> Datos de demostración<br /><small>Sin validez clínica real</small></div>
-          <button className="logout-button" onClick={signOut}>Cerrar sesión <span>↗</span></button>
+          <button className="logout-button" onClick={onSignOut}>Cerrar sesión <span>↗</span></button>
         </div>
       </aside>
       <main className="main-content">
@@ -74,12 +56,12 @@ function App() {
           <div className="profile-chip"><span className="avatar">{user.full_name.slice(0, 1)}</span><span><strong>{user.full_name}</strong><small>{roleLabels[user.role]}</small></span><span className="chevron">⌄</span></div>
         </header>
         <div className="content-wrap">
-          {view === 'overview' && canSeeDashboard && <Overview onError={setError} />}
-          {view === 'patients' && canSeeDashboard && <Patients onError={setError} />}
-          {view === 'agenda' && <Agenda user={user} onError={setError} />}
-          {view === 'clinical' && <Clinical user={user} onError={setError} />}
-          {view === 'audit' && canSeeDashboard && <Audit onError={setError} />}
-          {error && <div className="toast error" role="alert"><span>!</span>{error}<button onClick={() => setError('')}>×</button></div>}
+          {view === 'overview' && canSeeDashboard && <Overview onError={onError} />}
+          {view === 'patients' && canSeeDashboard && <Patients onError={onError} />}
+          {view === 'agenda' && <Agenda user={user} onError={onError} />}
+          {view === 'clinical' && <Clinical user={user} onError={onError} />}
+          {view === 'audit' && canSeeDashboard && <Audit onError={onError} />}
+          {error && <div className="toast error" role="alert"><span>!</span>{error}<button onClick={onClearError}>×</button></div>}
         </div>
       </main>
     </div>
@@ -93,7 +75,7 @@ function LoginScreen({ onSubmit, busy, error }: { onSubmit: (email: string, pass
   return (
     <main className="login-page">
       <section className="login-story"><div className="story-grid" /><div className="story-content"><div className="brand-mark light"><span>c</span><div><strong>confianza</strong><small>IPS · operaciones</small></div></div><p className="eyebrow">Sistema institucional</p><h1>El cuidado también necesita <em>orden.</em></h1><p className="story-copy">Una operación clara para que cada paciente, cada agenda y cada decisión tenga su lugar.</p><div className="story-footer"><span>01</span><div /><span>Bogotá · Colombia</span></div></div></section>
-      <section className="login-panel"><div className="login-card"><p className="eyebrow">Acceso seguro</p><h2>Bienvenido de nuevo</h2><p className="muted">Ingresa a tu espacio de trabajo institucional.</p><form onSubmit={submit} className="stack-form"><label>Correo electrónico<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required /></label><label>Contraseña<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required minLength={8} /></label>{error && <div className="form-error" role="alert">{error}</div>}<button className="primary-button" disabled={busy}>{busy ? 'Validando…' : 'Entrar al sistema'} <span>→</span></button></form><div className="demo-access"><span className="eyebrow">Acceso rápido de demo</span><div className="demo-buttons">{Object.entries(demoAccounts).map(([role, account]) => <button key={role} onClick={() => { setEmail(account.email); setPassword('Confianza123!') }}>{account.label}</button>)}</div></div><p className="legal-note">Entorno ficticio para demostración. No contiene información médica real.</p></div></section>
+      <section className="login-panel"><div className="login-card"><p className="eyebrow">Acceso seguro</p><h2>Bienvenido de nuevo</h2><p className="muted">Ingresa a tu espacio de trabajo institucional.</p><form onSubmit={submit} className="stack-form"><label>Correo electrónico<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required /></label><label>Contraseña<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required minLength={8} /></label>{error && <div className="form-error" role="alert">{error}</div>}<button className="primary-button" disabled={busy}>{busy ? 'Validando…' : 'Entrar al sistema'} <span>→</span></button></form><div className="demo-access"><span className="eyebrow">Acceso rápido de demo</span><div className="demo-buttons">{Object.entries(demoAccounts).map(([role, account]) => <button key={role} onClick={() => { setEmail(account.email); setPassword('Confianza123!') }}>{account.label}</button>)}</div></div><Link className="docs-login-link" to="/docs">Leer la documentación de la API <span>↗</span></Link><p className="legal-note">Entorno ficticio para demostración. No contiene información médica real.</p></div></section>
     </main>
   )
 }
@@ -174,5 +156,31 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
 function StatusPill({ label, tone }: { label: string; tone: 'success' | 'warning' | 'muted' | 'info' }) { return <span className={`status-pill ${tone}`}><i />{label}</span> }
 function formatDate(value: string) { return new Intl.DateTimeFormat('es-CO', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value)) }
 function formatDateTime(value: string) { return new Intl.DateTimeFormat('es-CO', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(value)) }
+
+function App() {
+  const [user, setUser] = useState<User | null>(null)
+  const [booting, setBooting] = useState(false)
+  const [error, setError] = useState('')
+
+  async function signIn(email: string, password: string) {
+    setBooting(true)
+    setError('')
+    try {
+      setUser(await authenticationService.signIn(email, password))
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : 'No fue posible iniciar sesión')
+    } finally {
+      setBooting(false)
+    }
+  }
+
+  async function signOut() {
+    try { await authenticationService.signOut() } catch { /* La sesión local se limpia aunque el servidor no responda. */ }
+    setUser(null)
+    setError('')
+  }
+
+  return <Routes><Route path="/docs" element={<ApiDocsIndex />} /><Route path="/docs/:operationId" element={<ApiDocsDetail />} /><Route path="*" element={<DashboardApp user={user} onSignIn={signIn} booting={booting} error={error} onSignOut={signOut} onError={setError} onClearError={() => setError('')} />} /></Routes>
+}
 
 export default App
