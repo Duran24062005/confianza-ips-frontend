@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { type FormEvent, type ReactNode, useEffect, useMemo, useState } from 'react'
-import { api, Appointment, Dashboard, Doctor, Patient, Role, Service, Site, User, setAccessToken } from './api'
+import { authenticationService, api } from './infrastructure/composition'
+import type { Appointment, Dashboard, Doctor, Patient, Role, Service, Site, User } from './domain/models'
 
 type View = 'overview' | 'patients' | 'agenda' | 'clinical' | 'audit'
 
@@ -29,9 +30,7 @@ function App() {
     setBooting(true)
     setError('')
     try {
-      const session = await api.login(email, password)
-      setAccessToken(session.access_token)
-      setUser(await api.me())
+      setUser(await authenticationService.signIn(email, password))
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : 'No fue posible iniciar sesión')
     } finally {
@@ -40,8 +39,7 @@ function App() {
   }
 
   async function signOut() {
-    try { await api.logout() } catch { /* La sesión local se limpia aunque el servidor no responda. */ }
-    setAccessToken(null)
+    try { await authenticationService.signOut() } catch { /* La sesión local se limpia aunque el servidor no responda. */ }
     setUser(null)
     setView('overview')
   }
