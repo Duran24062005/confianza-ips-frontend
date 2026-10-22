@@ -11,6 +11,7 @@ const navItems: NavItem[] = [
   { path: '/app/agenda', label: 'Agenda', icon: '◷', roles: ['admin', 'receptionist', 'doctor', 'patient'] },
   { path: '/app/historia', label: 'Historia clínica', icon: '⌁', roles: ['doctor', 'patient'] },
   { path: '/app/auditoria', label: 'Auditoría', icon: '≡', roles: ['admin'] },
+  { path: '/app/integraciones/waylo', label: 'Integración Waylo', icon: '↗', roles: ['admin'] },
 ]
 
 export function AppShell({ user, children, onSignOut, error, onClearError }: { user: User; children: ReactNode; onSignOut: () => void; error: string; onClearError: () => void }) {

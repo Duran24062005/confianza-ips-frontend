@@ -137,6 +137,12 @@ export type LoginResponse = {
   expires_in: number
 }
 
+export type WayloCode = {
+  code: string
+  expires_at: string
+  interval_seconds: number
+}
+
 export type AuditEvent = {
   id: number
   action: string

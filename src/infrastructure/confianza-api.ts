@@ -16,6 +16,7 @@ import type {
   Service,
   Site,
   User,
+  WayloCode,
 } from '../domain/models'
 import { HttpClient } from './http-client'
 
@@ -47,6 +48,10 @@ export class ConfianzaApiClient implements ConfianzaApi {
 
   logout(): Promise<{ message: string }> {
     return this.http.request('/auth/logout', { method: 'POST' })
+  }
+
+  wayloCode(): Promise<WayloCode> {
+    return this.http.request('/integrations/waylo/code')
   }
 
   dashboard(): Promise<Dashboard> {
