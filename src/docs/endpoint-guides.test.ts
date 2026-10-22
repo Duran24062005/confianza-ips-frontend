@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { endpointGuides, endpointOperationIds } from './endpoint-guides'
 
 const currentBackendOperationIds = [
-  'health_health_get', 'readiness_health_ready_get', 'login_api_v1_auth_login_post', 'me_api_v1_auth_me_get', 'logout_api_v1_auth_logout_post',
+  'health_health_get', 'readiness_health_ready_get', 'login_api_v1_auth_login_post', 'me_api_v1_auth_me_get', 'update_me_api_v1_auth_me_patch', 'logout_api_v1_auth_logout_post',
   'list_patients_api_v1_patients_get', 'create_patient_api_v1_patients_post', 'get_my_patient_api_v1_patients_me_get', 'update_my_patient_api_v1_patients_me_patch',
   'get_patient_api_v1_patients__patient_id__get', 'update_patient_api_v1_patients__patient_id__put', 'change_patient_status_api_v1_patients__patient_id__status_patch',
   'list_sites_api_v1_sites_get', 'list_specialties_api_v1_specialties_get', 'create_specialty_api_v1_specialties_post', 'list_services_api_v1_services_get',
@@ -12,14 +12,14 @@ const currentBackendOperationIds = [
   'create_appointment_api_v1_appointments_post', 'get_appointment_api_v1_appointments__appointment_id__get', 'change_status_api_v1_appointments__appointment_id__status_post',
   'reschedule_api_v1_appointments__appointment_id__reschedule_post', 'appointment_history_api_v1_appointments__appointment_id__history_get',
   'create_encounter_api_v1_clinical_appointments__appointment_id__encounter_post', 'list_patient_notes_api_v1_clinical_patients__patient_id__get',
-  'dashboard_api_v1_dashboard_get', 'audit_events_api_v1_audit_get', 'list_authorizations_api_v1_authorizations_get', 'create_authorization_api_v1_authorizations_post',
+  'dashboard_api_v1_dashboard_get', 'dashboard_analytics_api_v1_dashboard_analytics_get', 'audit_events_api_v1_audit_get', 'list_authorizations_api_v1_authorizations_get', 'create_authorization_api_v1_authorizations_post',
   'update_authorization_status_api_v1_authorizations__authorization_id__status_patch', 'create_appointment_confirmation_api_v1_documents_appointments__appointment_id__confirmation_post',
   'list_users_api_v1_users_get', 'create_user_api_v1_users_post',
 ]
 
 describe('endpoint editorial coverage', () => {
-  it('documents exactly the current 41 backend operations', () => {
-    expect(endpointGuides).toHaveLength(41)
+  it('documents exactly the current 43 backend operations', () => {
+    expect(endpointGuides).toHaveLength(43)
     expect(new Set(endpointOperationIds).size).toBe(endpointOperationIds.length)
     expect([...endpointOperationIds].sort()).toEqual([...currentBackendOperationIds].sort())
   })
