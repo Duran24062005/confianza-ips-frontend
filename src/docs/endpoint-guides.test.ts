@@ -15,11 +15,15 @@ const currentBackendOperationIds = [
   'dashboard_api_v1_dashboard_get', 'dashboard_analytics_api_v1_dashboard_analytics_get', 'audit_events_api_v1_audit_get', 'list_authorizations_api_v1_authorizations_get', 'create_authorization_api_v1_authorizations_post',
   'update_authorization_status_api_v1_authorizations__authorization_id__status_patch', 'create_appointment_confirmation_api_v1_documents_appointments__appointment_id__confirmation_post',
   'list_users_api_v1_users_get', 'create_user_api_v1_users_post',
+  'get_waylo_code_api_v1_integrations_waylo_code_get', 'issue_waylo_token_api_v1_integrations_waylo_token_post',
+  'get_waylo_profile_api_v1_integrations_waylo_me_get', 'list_waylo_appointments_api_v1_integrations_waylo_appointments_get',
+  'get_waylo_appointment_api_v1_integrations_waylo_appointments__appointment_id__get',
+  'get_waylo_appointment_history_api_v1_integrations_waylo_appointments__appointment_id__history_get',
 ]
 
 describe('endpoint editorial coverage', () => {
-  it('documents exactly the current 43 backend operations', () => {
-    expect(endpointGuides).toHaveLength(43)
+  it('documents exactly the current 49 backend operations', () => {
+    expect(endpointGuides).toHaveLength(49)
     expect(new Set(endpointOperationIds).size).toBe(endpointOperationIds.length)
     expect([...endpointOperationIds].sort()).toEqual([...currentBackendOperationIds].sort())
   })

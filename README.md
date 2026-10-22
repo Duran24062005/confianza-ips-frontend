@@ -52,6 +52,12 @@ La interfaz está escrita en español y muestra siempre que los datos son fictic
 
 El área autenticada usa rutas `/app/resumen`, `/app/pacientes`, `/app/agenda`, `/app/historia`, `/app/auditoria` y `/app/perfil`. El resumen consulta métricas persistidas del backend para periodos de 7, 30 o 90 días. La arquitectura visual y de componentes está documentada en [`docs/001-frontend-redesign.md`](docs/001-frontend-redesign.md).
 
+La ruta administrativa `/app/integraciones/waylo` muestra el código TOTP vigente
+para la integración con Waylo, su vencimiento y un botón de copia. Solo aparece
+para usuarios con rol `admin`; la interfaz nunca recibe ni muestra el secreto
+TOTP. El contrato de intercambio utiliza `full_name`, `email` y `code`, donde
+`email` es el único campo de correo.
+
 ## Integración continua
 
 El workflow `.github/workflows/ci.yml` se ejecuta en cada `push` o `pull_request` hacia `main`, y también puede iniciarse manualmente. Usa Node.js 24 y pnpm 12.15.0 para instalar dependencias con lockfile, ejecutar Vitest y construir la aplicación.
