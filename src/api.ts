@@ -5,6 +5,7 @@ export type {
   AuditEvent,
   ClinicalNote,
   Dashboard,
+  DashboardAnalytics,
   Doctor,
   LoginResponse,
   Patient,

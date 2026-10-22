@@ -5,6 +5,8 @@
   "framework": "vite",
   "rewrites": [
     { "source": "/docs", "destination": "/index.html" },
-    { "source": "/docs/:path*", "destination": "/index.html" }
+    { "source": "/docs/:path*", "destination": "/index.html" },
+    { "source": "/app", "destination": "/index.html" },
+    { "source": "/app/:path*", "destination": "/index.html" }
   ]
 }

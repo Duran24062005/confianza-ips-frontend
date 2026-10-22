@@ -2,6 +2,7 @@ import type {
   Appointment,
   AuditEvent,
   ClinicalNote,
+  DashboardAnalytics,
   Dashboard,
   Doctor,
   LoginResponse,
@@ -22,6 +23,8 @@ export type CreateAppointmentInput = {
   reason: string
 }
 
+export type UpdateUserInput = { full_name: string }
+
 export interface AccessTokenStore {
   get(): string | null
   set(token: string | null): void
@@ -30,8 +33,12 @@ export interface AccessTokenStore {
 export interface ConfianzaApi {
   login(email: string, password: string): Promise<LoginResponse>
   me(): Promise<User>
+  updateMe(payload: UpdateUserInput): Promise<User>
+  myPatient(): Promise<Patient>
+  updateMyPatient(payload: CreatePatientInput): Promise<Patient>
   logout(): Promise<{ message: string }>
   dashboard(): Promise<Dashboard>
+  analytics(days?: 7 | 30 | 90): Promise<DashboardAnalytics>
   patients(search?: string): Promise<Patient[]>
   createPatient(payload: CreatePatientInput): Promise<Patient>
   doctors(): Promise<Doctor[]>

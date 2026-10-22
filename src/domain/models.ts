@@ -92,6 +92,45 @@ export type Dashboard = {
   upcoming_appointments: number
 }
 
+export type DashboardPeriod = {
+  days: number
+  start: string
+  end: string
+  timezone: 'America/Bogota'
+}
+
+export type DashboardSummary = {
+  active_patients: number | null
+  active_doctors: number | null
+  appointments_today: number
+  upcoming_appointments: number
+  pending_appointments: number
+  confirmed_appointments: number
+  completed_appointments: number
+  cancelled_appointments: number
+  no_show_appointments: number
+  attendance_rate: number | null
+}
+
+export type DashboardTrendPoint = {
+  date: string
+  total: number
+  requested: number
+  confirmed: number
+  completed: number
+  cancelled: number
+  no_show: number
+}
+
+export type DashboardAnalytics = {
+  scope: 'global' | 'doctor' | 'patient'
+  period: DashboardPeriod
+  summary: DashboardSummary
+  trend: DashboardTrendPoint[]
+  status_breakdown: Array<{ status: AppointmentStatus; count: number }>
+  service_breakdown: Array<{ service_id: number; service_name: string; count: number }>
+}
+
 export type LoginResponse = {
   access_token: string
   token_type: string

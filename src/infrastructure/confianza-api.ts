@@ -8,6 +8,7 @@ import type {
   Appointment,
   AuditEvent,
   ClinicalNote,
+  DashboardAnalytics,
   Dashboard,
   Doctor,
   LoginResponse,
@@ -32,12 +33,28 @@ export class ConfianzaApiClient implements ConfianzaApi {
     return this.http.request('/auth/me')
   }
 
+  updateMe(payload: { full_name: string }): Promise<User> {
+    return this.http.request('/auth/me', { method: 'PATCH', body: JSON.stringify(payload) })
+  }
+
+  myPatient(): Promise<Patient> {
+    return this.http.request('/patients/me')
+  }
+
+  updateMyPatient(payload: CreatePatientInput): Promise<Patient> {
+    return this.http.request('/patients/me', { method: 'PATCH', body: JSON.stringify(payload) })
+  }
+
   logout(): Promise<{ message: string }> {
     return this.http.request('/auth/logout', { method: 'POST' })
   }
 
   dashboard(): Promise<Dashboard> {
     return this.http.request('/dashboard')
+  }
+
+  analytics(days: 7 | 30 | 90 = 30): Promise<DashboardAnalytics> {
+    return this.http.request(`/dashboard/analytics?days=${days}`)
   }
 
   patients(search = ''): Promise<Patient[]> {
