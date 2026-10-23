@@ -26,8 +26,6 @@ export function AppShell({ user, children, onSignOut, error, onClearError }: { u
         <nav className="app-nav" aria-label="Navegación principal">
           <p className="nav-section-label">Espacio de trabajo</p>
           {items.map((item) => <NavLink key={item.path} to={item.path} className={({ isActive }) => `app-nav-link ${isActive ? 'active' : ''}`}><span>{item.icon}</span>{item.label}</NavLink>)}
-          <p className="nav-section-label nav-section-spaced">Referencia</p>
-          <Link to="/docs" className="app-nav-link"><span>⌘</span>Documentación API</Link>
         </nav>
         <div className="sidebar-footer"><p>Datos sintéticos<br /><small>No tienen validez clínica real.</small></p><button className="signout-link" onClick={onSignOut}>Cerrar sesión <span>↗</span></button></div>
       </aside>
