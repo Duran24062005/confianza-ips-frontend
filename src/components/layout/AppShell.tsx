@@ -21,7 +21,7 @@ export function AppShell({ user, children, onSignOut, error, onClearError }: { u
   return (
     <div className="product-shell">
       <aside className="app-sidebar">
-        <Link to="/app/resumen" className="brand-lockup"><span className="brand-symbol">c</span><span><strong>confianza</strong><small>IPS · operaciones</small></span></Link>
+        <Link to="/app/resumen" className="brand-lockup"><span className="brand-symbol brand-symbol-image"><img src="/brand/confianza-symbol.png" alt="" /></span><span><strong>confianza</strong><small>IPS · operaciones</small></span></Link>
         <div className="sidebar-context"><span className="status-indicator" /> Entorno de demostración</div>
         <nav className="app-nav" aria-label="Navegación principal">
           <p className="nav-section-label">Espacio de trabajo</p>

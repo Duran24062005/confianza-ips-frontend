@@ -12,6 +12,7 @@ import { AgendaPage } from './features/agenda/AgendaPage'
 import { ClinicalPage } from './features/clinical/ClinicalPage'
 import { AuditPage } from './features/audit/AuditPage'
 import { ProfilePage } from './features/profile/ProfilePage'
+import { PublicLandingPage } from './features/landing/PublicLandingPage'
 
 function ProtectedRoute({ user, roles, children }: { user: User; roles?: Role[]; children: ReactNode }) {
   if (roles && !roles.includes(user.role)) return <Navigate to="/app/resumen" replace />
@@ -30,6 +31,7 @@ function App() {
   async function signIn(email: string, password: string) { setBooting(true); setError(''); try { setUser(await authenticationService.signIn(email, password)) } catch (reason) { setError(reason instanceof Error ? reason.message : 'No fue posible iniciar sesión') } finally { setBooting(false) } }
   async function signOut() { try { await authenticationService.signOut() } catch { /* La sesión local se limpia aunque el servidor no responda. */ } setUser(null); setError('') }
   return <Routes>
+    <Route path="/" element={<PublicLandingPage />} />
     <Route path="/docs" element={<ApiDocsIndex />} />
     <Route path="/docs/:operationId" element={<ApiDocsDetail />} />
     <Route path="/app" element={<DashboardApp user={user} onSignIn={signIn} booting={booting} error={error} onSignOut={signOut} onClearError={() => setError('')} />}>
