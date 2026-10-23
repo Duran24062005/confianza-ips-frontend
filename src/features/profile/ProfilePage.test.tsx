@@ -23,6 +23,9 @@ describe('ProfilePage', () => {
     render(<ProfilePage user={patientUser} onUpdated={onUpdated} onError={vi.fn()} onSignOut={onSignOut} />)
 
     const nameInput = await screen.findByDisplayValue('Ana Demo')
+    expect(screen.getByLabelText('EPS registrada')).toHaveValue('EPS Demo')
+    expect(screen.getByLabelText('EPS registrada')).toHaveAttribute('readonly')
+    expect(screen.getByText(/La afiliación determina tu acceso/)).toBeInTheDocument()
     await user.clear(nameInput)
     await user.type(nameInput, 'Ana Actualizada')
     const firstNameInput = screen.getByDisplayValue('Ana')
