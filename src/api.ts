@@ -13,7 +13,7 @@ export type {
   Service,
   Site,
   User,
-  WayloCode,
+  AgentActivationCode,
 } from './domain/models'
 export type { CreateAppointmentInput, CreatePatientInput, ConfianzaApi } from './application/ports'
 import { accessTokenStore, api, authenticationService } from './infrastructure/composition'

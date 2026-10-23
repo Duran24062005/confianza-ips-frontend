@@ -10,7 +10,7 @@ import type {
   Service,
   Site,
   User,
-  WayloCode,
+  AgentActivationCode,
 } from '../domain/models'
 
 export type CreatePatientInput = Omit<Patient, 'id' | 'active' | 'created_at' | 'updated_at'>
@@ -38,7 +38,7 @@ export interface ConfianzaApi {
   myPatient(): Promise<Patient>
   updateMyPatient(payload: CreatePatientInput): Promise<Patient>
   logout(): Promise<{ message: string }>
-  wayloCode(): Promise<WayloCode>
+  issueAgentActivationCode(): Promise<AgentActivationCode>
   dashboard(): Promise<Dashboard>
   analytics(days?: 7 | 30 | 90): Promise<DashboardAnalytics>
   patients(search?: string): Promise<Patient[]>

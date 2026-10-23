@@ -52,11 +52,10 @@ La interfaz está escrita en español y muestra siempre que los datos son fictic
 
 El área autenticada usa rutas `/app/resumen`, `/app/pacientes`, `/app/agenda`, `/app/historia`, `/app/auditoria` y `/app/perfil`. El resumen consulta métricas persistidas del backend para periodos de 7, 30 o 90 días. La arquitectura visual y de componentes está documentada en [`docs/001-frontend-redesign.md`](docs/001-frontend-redesign.md).
 
-La ruta administrativa `/app/integraciones/waylo` muestra el código TOTP vigente
-para la integración con Waylo, su vencimiento y un botón de copia. Solo aparece
-para usuarios con rol `admin`; la interfaz nunca recibe ni muestra el secreto
-TOTP. El contrato de intercambio utiliza `full_name`, `email` y `code`, donde
-`email` es el único campo de correo.
+El dashboard del paciente incluye la tarjeta de activación del agente. El paciente
+genera una clave individual de seis dígitos, válida durante cinco minutos y de un
+solo uso, para compartirla junto con su documento y EPS. La interfaz nunca recibe
+la API key del agente ni muestra secretos del backend.
 
 ## Integración continua
 

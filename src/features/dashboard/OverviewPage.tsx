@@ -3,6 +3,7 @@ import type { User } from '../../domain/models'
 import { api } from '../../infrastructure/composition'
 import { ServiceChart, StatusChart, TrendChart } from '../../components/charts/AnalyticsCharts'
 import { ErrorState, MetricCard, PageHeader } from '../../components/ui'
+import { AgentActivationCard } from '../agent/AgentActivationCard'
 
 type Period = 7 | 30 | 90
 
@@ -47,6 +48,7 @@ export function OverviewPage({ user }: { user: User }) {
     <PageHeader eyebrow={isGlobal ? 'Lectura institucional' : 'Tu actividad'} title={isGlobal ? 'Resumen operativo' : `Hola, ${user.full_name.split(' ')[0]}`} subtitle={isGlobal ? 'La sede central, vista con datos persistidos y una lectura útil del periodo.' : 'Una lectura breve de tus citas y actividad dentro de Confianza IPS.'} action={<div className="period-picker" aria-label="Periodo de métricas">{([7, 30, 90] as Period[]).map((item) => <button key={item} className={period === item ? 'active' : ''} onClick={() => setPeriod(item)}>{item} días</button>)}</div>} />
     {loading ? <div className="dashboard-loading"><div /><div /><div /><div /></div> : error ? <ErrorState message={error} onRetry={() => void load(period)} /> : data && <>
       <section className="metric-grid">{metrics.map((metric) => <MetricCard key={metric.label} {...metric} />)}</section>
+      {user.role === 'patient' && <AgentActivationCard />}
       <section className="dashboard-grid">
         <article className="surface chart-panel chart-panel-large"><div className="panel-heading"><div><p className="eyebrow">Ritmo de atención</p><h2>Actividad por día</h2></div><span className="panel-note">Últimos {period} días</span></div><TrendChart data={data.trend} /></article>
         <article className="surface chart-panel"><div className="panel-heading"><div><p className="eyebrow">Distribución</p><h2>Estados de cita</h2></div></div><StatusChart data={data.status_breakdown} /></article>

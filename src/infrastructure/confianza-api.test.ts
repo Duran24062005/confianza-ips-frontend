@@ -27,13 +27,14 @@ describe('ConfianzaApiClient analytics and profile contracts', () => {
     expect((fetchMock.mock.calls[0][1] as RequestInit).body).toBe(JSON.stringify({ full_name: 'Ana Actualizada' }))
   })
 
-  it('loads the current administrative Waylo code', async () => {
+  it('issues a patient activation code', async () => {
     const fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => ({ code: '123456' }) })
     vi.stubGlobal('fetch', fetchMock)
     const client = new ConfianzaApiClient(new HttpClient('http://api.test/api/v1', { get: () => 'token', set: vi.fn() }))
 
-    await client.wayloCode()
+    await client.issueAgentActivationCode()
 
-    expect(fetchMock.mock.calls[0][0]).toBe('http://api.test/api/v1/integrations/waylo/code')
+    expect(fetchMock.mock.calls[0][0]).toBe('http://api.test/api/v1/integrations/agent/activation-code')
+    expect((fetchMock.mock.calls[0][1] as RequestInit).method).toBe('POST')
   })
 })

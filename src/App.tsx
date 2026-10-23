@@ -12,7 +12,6 @@ import { AgendaPage } from './features/agenda/AgendaPage'
 import { ClinicalPage } from './features/clinical/ClinicalPage'
 import { AuditPage } from './features/audit/AuditPage'
 import { ProfilePage } from './features/profile/ProfilePage'
-import { WayloIntegrationPage } from './features/integrations/WayloIntegrationPage'
 
 function ProtectedRoute({ user, roles, children }: { user: User; roles?: Role[]; children: ReactNode }) {
   if (roles && !roles.includes(user.role)) return <Navigate to="/app/resumen" replace />
@@ -40,7 +39,6 @@ function App() {
       <Route path="agenda" element={user ? <AgendaPage user={user} onError={setError} /> : null} />
       <Route path="historia" element={user ? <ProtectedRoute user={user} roles={['doctor', 'patient']}><ClinicalPage user={user} onError={setError} /></ProtectedRoute> : null} />
       <Route path="auditoria" element={user ? <ProtectedRoute user={user} roles={['admin']}><AuditPage /></ProtectedRoute> : null} />
-      <Route path="integraciones/waylo" element={user ? <ProtectedRoute user={user} roles={['admin']}><WayloIntegrationPage /></ProtectedRoute> : null} />
       <Route path="perfil" element={user ? <ProfilePage user={user} onUpdated={setUser} onError={setError} onSignOut={signOut} /> : null} />
     </Route>
     <Route path="*" element={user ? <Navigate to="/app/resumen" replace /> : <DashboardApp user={null} onSignIn={signIn} booting={booting} error={error} onSignOut={signOut} onClearError={() => setError('')} />} />

@@ -12,7 +12,6 @@ describe('AppShell', () => {
     render(<MemoryRouter initialEntries={['/app/auditoria']}><AppShell user={admin} onSignOut={vi.fn()} error="" onClearError={vi.fn()}><h1>Contenido</h1></AppShell></MemoryRouter>)
     expect(screen.getByRole('link', { name: 'Pacientes' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Auditoría' })).toHaveClass('active')
-    expect(screen.getByRole('link', { name: 'Integración Waylo' })).toHaveAttribute('href', '/app/integraciones/waylo')
     expect(screen.getByRole('link', { name: /Admin Demo/ })).toHaveAttribute('href', '/app/perfil')
   })
 
@@ -20,7 +19,6 @@ describe('AppShell', () => {
     render(<MemoryRouter initialEntries={['/app/resumen']}><AppShell user={patient} onSignOut={vi.fn()} error="" onClearError={vi.fn()}><h1>Contenido</h1></AppShell></MemoryRouter>)
     expect(screen.queryByRole('link', { name: 'Pacientes' })).not.toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Auditoría' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: 'Integración Waylo' })).not.toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: 'Agenda' }).length).toBeGreaterThan(0)
   })
 })

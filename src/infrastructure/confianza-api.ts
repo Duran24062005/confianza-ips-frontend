@@ -16,7 +16,7 @@ import type {
   Service,
   Site,
   User,
-  WayloCode,
+  AgentActivationCode,
 } from '../domain/models'
 import { HttpClient } from './http-client'
 
@@ -50,8 +50,8 @@ export class ConfianzaApiClient implements ConfianzaApi {
     return this.http.request('/auth/logout', { method: 'POST' })
   }
 
-  wayloCode(): Promise<WayloCode> {
-    return this.http.request('/integrations/waylo/code')
+  issueAgentActivationCode(): Promise<AgentActivationCode> {
+    return this.http.request('/integrations/agent/activation-code', { method: 'POST' })
   }
 
   dashboard(): Promise<Dashboard> {
