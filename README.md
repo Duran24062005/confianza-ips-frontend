@@ -10,7 +10,7 @@ Aplicación React + Vite para la operación institucional ficticia de Confianza 
 
 El frontend consume el backend mediante `VITE_API_BASE_URL`, mantiene el JWT únicamente en memoria y no contiene reglas críticas de autorización.
 
-La ruta raíz `/` es la landing pública de Confianza IPS. Presenta la identidad visual, capacidades ficticias y accesos a `Iniciar sesión` y `Crear cuenta`. En el MVP ambos accesos llevan a `/app`, porque el registro persistido todavía no forma parte del contrato disponible. Los recursos gráficos locales viven en `public/brand/` y `public/landing/`; el alcance y las decisiones visuales están en [`docs/002-public-landing-brand.md`](docs/002-public-landing-brand.md).
+La ruta raíz `/` es la landing pública de Confianza IPS. Presenta la identidad visual, capacidades ficticias y accesos a `Iniciar sesión` y `Crear cuenta`. La segunda opción abre `/app?mode=register` y crea únicamente una cuenta de paciente con datos sintéticos; no permite registrar personal institucional. Los recursos gráficos locales viven en `public/brand/` y `public/landing/`; el alcance y las decisiones visuales están en [`docs/002-public-landing-brand.md`](docs/002-public-landing-brand.md).
 
 En Vercel, `VITE_API_BASE_URL` debe apuntar al backend público, no a `localhost`. La configuración de producción esperada para la demo es `https://confianza-ips-backend.vercel.app/api/v1`. Las variables `VITE_*` se incorporan durante el build, así que después de cambiarlas hay que crear un nuevo deployment.
 

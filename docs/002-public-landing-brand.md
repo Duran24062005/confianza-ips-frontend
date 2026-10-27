@@ -12,7 +12,7 @@ El objetivo es crear la ruta `/` como punto de entrada de demostración: explica
 - Crear una identidad visual de Confianza IPS con logotipo, símbolo, paleta, tipografías y reglas de uso aplicadas a la portada.
 - Incorporar recursos gráficos generados para el hero y una sección editorial de apoyo.
 - Implementar navegación institucional, hero, accesos de confianza, módulos de producto, bloque de impacto, llamada a la acción y footer.
-- Incluir botones funcionales de `Iniciar sesión` y `Crear cuenta` que naveguen al acceso de `/app`.
+- Incluir botones funcionales de `Iniciar sesión` y `Crear cuenta`; el segundo abre el registro de paciente en `/app?mode=register`.
 - Mantener `/app/*` y `/docs*` sin cambios de contrato ni de autenticación.
 - Mantener visible que el contenido y los datos son ficticios o de demostración.
 
@@ -40,7 +40,7 @@ Los nombres de módulos, métricas, testimonios y cifras de la portada son demos
 
 - `/` renderiza contenido estático en el cliente y no necesita una llamada al backend.
 - `Iniciar sesión` dirige a `/app`, donde el flujo actual conserva su formulario y autenticación.
-- `Crear cuenta` dirige a `/app` como punto de entrada único del MVP; el registro es una capacidad futura y no se simula como alta persistida.
+- `Crear cuenta` dirige a `/app?mode=register` y crea una cuenta persistida solo para el rol `patient` en esta demostración.
 - No se modifican nombres de campos, cookies, endpoints, permisos ni modelos existentes.
 
 ## Validaciones y accesibilidad
@@ -55,7 +55,7 @@ Los nombres de módulos, métricas, testimonios y cifras de la portada son demos
 ## Riesgos y bordes
 
 - Una imagen generada puede contener texto ilegible o artefactos; por eso los mensajes críticos vivirán en HTML, no dentro de las imágenes.
-- `/app` actualmente funciona como acceso y no como un formulario separado de registro. El botón de registro debe comunicar ese alcance para no prometer una operación inexistente.
+- El registro es una capacidad exclusiva de pacientes ficticios; no debe sugerir que cualquier visitante puede crear cuentas clínicas o administrativas.
 - La landing no demuestra una sesión autenticada, conexión con base de datos ni entrega de datos clínicos reales.
 - Los recursos gráficos deben quedar dentro de `public/` y no depender de URLs externas para la portada.
 
