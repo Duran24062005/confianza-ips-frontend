@@ -41,4 +41,19 @@ describe('AuthenticationService', () => {
 
     expect(tokenStore.token).toBeNull()
   })
+
+  it('stores the token and loads the patient created through registration', async () => {
+    const tokenStore = new TestTokenStore()
+    const api = {
+      register: vi.fn().mockResolvedValue({ access_token: 'registered-token', token_type: 'bearer', expires_in: 900 }),
+      me: vi.fn().mockResolvedValue({ id: 4, role: 'patient' }),
+    } as unknown as ConfianzaApi
+    const service = new AuthenticationService(api, tokenStore)
+    const payload = { document_type: 'CC', document_number: '900', first_name: 'Ana', last_name: 'Prueba', birth_date: '1990-01-01', email: 'ana@nueva.demo', phone: '3000000', address: 'Calle 1', city: 'Bogotá', eps: 'EPS Test', emergency_name: 'Contacto', emergency_phone: '3000001', password: 'Password123!' }
+
+    await expect(service.register(payload)).resolves.toMatchObject({ role: 'patient' })
+
+    expect(api.register).toHaveBeenCalledWith(payload)
+    expect(tokenStore.token).toBe('registered-token')
+  })
 })

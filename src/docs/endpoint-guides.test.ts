@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { endpointGuides, endpointOperationIds } from './endpoint-guides'
 
 const currentBackendOperationIds = [
-  'health_health_get', 'readiness_health_ready_get', 'login_api_v1_auth_login_post', 'me_api_v1_auth_me_get', 'update_me_api_v1_auth_me_patch', 'logout_api_v1_auth_logout_post',
+  'health_health_get', 'readiness_health_ready_get', 'login_api_v1_auth_login_post', 'register_api_v1_auth_register_post', 'me_api_v1_auth_me_get', 'update_me_api_v1_auth_me_patch', 'logout_api_v1_auth_logout_post',
   'list_patients_api_v1_patients_get', 'create_patient_api_v1_patients_post', 'get_my_patient_api_v1_patients_me_get', 'update_my_patient_api_v1_patients_me_patch',
   'get_patient_api_v1_patients__patient_id__get', 'update_patient_api_v1_patients__patient_id__put', 'change_patient_status_api_v1_patients__patient_id__status_patch',
   'list_sites_api_v1_sites_get', 'list_specialties_api_v1_specialties_get', 'create_specialty_api_v1_specialties_post', 'list_services_api_v1_services_get',
@@ -20,8 +20,8 @@ const currentBackendOperationIds = [
 ]
 
 describe('endpoint editorial coverage', () => {
-  it('documents exactly the current 45 backend operations', () => {
-    expect(endpointGuides).toHaveLength(45)
+  it('documents exactly the current 46 backend operations', () => {
+    expect(endpointGuides).toHaveLength(46)
     expect(new Set(endpointOperationIds).size).toBe(endpointOperationIds.length)
     expect([...endpointOperationIds].sort()).toEqual([...currentBackendOperationIds].sort())
   })

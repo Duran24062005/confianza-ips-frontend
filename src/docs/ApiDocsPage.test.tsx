@@ -33,7 +33,7 @@ describe('API documentation pages', () => {
 
   it('filters operations by method, domain and role', () => {
     const operations = buildDocumentedOperations(openApiFixture)
-    expect(filterOperations(operations, { search: '', method: 'POST', domain: 'Autenticación', role: 'Público' }).map((item) => item.guide.operationId)).toEqual(['login_api_v1_auth_login_post'])
+    expect(filterOperations(operations, { search: '', method: 'POST', domain: 'Autenticación', role: 'Público' }).map((item) => item.guide.operationId)).toEqual(['register_api_v1_auth_register_post', 'login_api_v1_auth_login_post'])
     expect(filterOperations(operations, { search: 'comprobar disponibilidad', method: '', domain: '', role: '' })).toHaveLength(1)
   })
 

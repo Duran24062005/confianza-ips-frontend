@@ -1,5 +1,5 @@
 import type { AccessTokenStore, ConfianzaApi } from './ports'
-import type { User } from '../domain/models'
+import type { PatientRegistrationInput, User } from '../domain/models'
 
 export class AuthenticationService {
   constructor(
@@ -9,6 +9,18 @@ export class AuthenticationService {
 
   async signIn(email: string, password: string): Promise<User> {
     const session = await this.api.login(email, password)
+    this.tokenStore.set(session.access_token)
+
+    try {
+      return await this.api.me()
+    } catch (error) {
+      this.tokenStore.set(null)
+      throw error
+    }
+  }
+
+  async register(payload: PatientRegistrationInput): Promise<User> {
+    const session = await this.api.register(payload)
     this.tokenStore.set(session.access_token)
 
     try {

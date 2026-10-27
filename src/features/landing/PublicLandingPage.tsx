@@ -72,7 +72,7 @@ export function PublicLandingPage() {
         </nav>
         <div className="landing-header-actions">
           <Link className="landing-text-link" to="/app">Iniciar sesión</Link>
-          <Link className="landing-button landing-button-small" to="/app">Crear cuenta <Arrow /></Link>
+          <Link className="landing-button landing-button-small" to="/app?mode=register">Crear cuenta <Arrow /></Link>
         </div>
       </header>
 
@@ -83,7 +83,7 @@ export function PublicLandingPage() {
           <p className="landing-hero-summary">Un espacio claro para coordinar pacientes, citas y decisiones clínicas con trazabilidad.</p>
           <div className="landing-actions">
             <Link className="landing-button" to="/app">Iniciar sesión <Arrow /></Link>
-            <Link className="landing-button landing-button-quiet" to="/app">Crear cuenta <Arrow /></Link>
+            <Link className="landing-button landing-button-quiet" to="/app?mode=register">Crear cuenta <Arrow /></Link>
           </div>
           <div className="landing-hero-meta">
             <span className="landing-status-mark" aria-hidden="true" />
@@ -169,14 +169,14 @@ export function PublicLandingPage() {
         </div>
         <div className="landing-cta-actions">
           <Link className="landing-button landing-button-light" to="/app">Iniciar sesión <Arrow /></Link>
-          <Link className="landing-light-link" to="/app">Crear cuenta <Arrow /></Link>
+          <Link className="landing-light-link" to="/app?mode=register">Crear cuenta <Arrow /></Link>
         </div>
       </section>
 
       <footer className="landing-footer">
         <div className="landing-footer-brand"><BrandLockup light /><p>Una plataforma ficticia para explorar una operación de salud más conectada.</p></div>
         <div className="landing-footer-column"><span>Plataforma</span><Link to="/">Inicio</Link><a href="#plataforma">Capacidades</a><Link to="/docs">Documentación API</Link></div>
-        <div className="landing-footer-column"><span>Acceso</span><Link to="/app">Iniciar sesión</Link><Link to="/app">Crear cuenta</Link><a href="#contacto">Contacto</a></div>
+        <div className="landing-footer-column"><span>Acceso</span><Link to="/app">Iniciar sesión</Link><Link to="/app?mode=register">Crear cuenta</Link><a href="#contacto">Contacto</a></div>
         <div className="landing-footer-note"><span>Confianza IPS</span><p>Este sitio usa información ficticia y no sustituye una historia clínica ni una recomendación profesional.</p></div>
       </footer>
     </main>

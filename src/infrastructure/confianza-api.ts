@@ -12,6 +12,7 @@ import type {
   Dashboard,
   Doctor,
   LoginResponse,
+  PatientRegistrationInput,
   Patient,
   Service,
   Site,
@@ -27,6 +28,13 @@ export class ConfianzaApiClient implements ConfianzaApi {
     return this.http.request('/auth/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
+    })
+  }
+
+  register(payload: PatientRegistrationInput): Promise<LoginResponse> {
+    return this.http.request('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(payload),
     })
   }
 

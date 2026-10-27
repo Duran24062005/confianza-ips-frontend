@@ -37,4 +37,19 @@ describe('ConfianzaApiClient analytics and profile contracts', () => {
     expect(fetchMock.mock.calls[0][0]).toBe('http://api.test/api/v1/integrations/agent/activation-code')
     expect((fetchMock.mock.calls[0][1] as RequestInit).method).toBe('POST')
   })
+
+  it('sends a public patient registration request without an access token', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 201, json: async () => ({ access_token: 'token' }) })
+    vi.stubGlobal('fetch', fetchMock)
+    const client = new ConfianzaApiClient(new HttpClient('http://api.test/api/v1', { get: () => null, set: vi.fn() }))
+    const payload = { document_type: 'CC', document_number: '900', first_name: 'Ana', last_name: 'Prueba', birth_date: '1990-01-01', email: 'ana@nueva.demo', phone: '3000000', address: 'Calle 1', city: 'Bogotá', eps: 'EPS Test', emergency_name: 'Contacto', emergency_phone: '3000001', password: 'Password123!' }
+
+    await client.register(payload)
+
+    expect(fetchMock.mock.calls[0][0]).toBe('http://api.test/api/v1/auth/register')
+    const request = fetchMock.mock.calls[0][1] as RequestInit
+    expect(request.method).toBe('POST')
+    expect((new Headers(request.headers)).get('Authorization')).toBeNull()
+    expect(request.body).toBe(JSON.stringify(payload))
+  })
 })

@@ -6,6 +6,7 @@ import type {
   Dashboard,
   Doctor,
   LoginResponse,
+  PatientRegistrationInput,
   Patient,
   Service,
   Site,
@@ -33,6 +34,7 @@ export interface AccessTokenStore {
 
 export interface ConfianzaApi {
   login(email: string, password: string): Promise<LoginResponse>
+  register(payload: PatientRegistrationInput): Promise<LoginResponse>
   me(): Promise<User>
   updateMe(payload: UpdateUserInput): Promise<User>
   myPatient(): Promise<Patient>

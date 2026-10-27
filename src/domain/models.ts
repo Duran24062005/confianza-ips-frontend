@@ -29,6 +29,10 @@ export type Patient = {
   updated_at: string
 }
 
+export type PatientRegistrationInput = Omit<Patient, 'id' | 'active' | 'created_at' | 'updated_at'> & {
+  password: string
+}
+
 export type Doctor = {
   id: number
   license_number: string

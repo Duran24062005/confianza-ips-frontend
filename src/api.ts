@@ -8,6 +8,7 @@ export type {
   DashboardAnalytics,
   Doctor,
   LoginResponse,
+  PatientRegistrationInput,
   Patient,
   Role,
   Service,
