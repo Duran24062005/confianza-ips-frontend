@@ -23,6 +23,8 @@ describe('ProfilePage', () => {
     render(<ProfilePage user={patientUser} onUpdated={onUpdated} onError={vi.fn()} onSignOut={onSignOut} />)
 
     const nameInput = await screen.findByDisplayValue('Ana Demo')
+    expect(screen.getByLabelText('Cédula (CC)')).toHaveValue('123')
+    expect(screen.getByLabelText('Cédula (CC)')).toHaveAttribute('readonly')
     expect(screen.getByLabelText('EPS registrada')).toHaveValue('EPS Demo')
     expect(screen.getByLabelText('EPS registrada')).toHaveAttribute('readonly')
     expect(screen.getByText(/La afiliación determina tu acceso/)).toBeInTheDocument()
