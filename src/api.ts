@@ -2,6 +2,7 @@
 export type {
   Appointment,
   AppointmentStatus,
+  AvailabilitySlot,
   AuditEvent,
   ClinicalNote,
   Dashboard,
@@ -16,7 +17,7 @@ export type {
   User,
   AgentActivationCode,
 } from './domain/models'
-export type { CreateAppointmentInput, CreatePatientInput, ConfianzaApi } from './application/ports'
+export type { CreateAppointmentInput, CreatePatientInput, ConfianzaApi, RescheduleAppointmentInput } from './application/ports'
 import { accessTokenStore, api, authenticationService } from './infrastructure/composition'
 
 export { accessTokenStore, api, authenticationService }

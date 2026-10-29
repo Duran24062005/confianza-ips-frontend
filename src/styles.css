@@ -323,3 +323,11 @@ button, input, select { font-family: inherit; }
   .landing-footer { grid-template-columns: 1fr 1fr; gap: 35px 20px; padding: 47px 20px 40px; }.landing-footer-brand, .landing-footer-note { grid-column: span 2; }.landing-footer-note { padding-top: 5px; border-top: 1px solid rgba(216, 235, 228, .14); }
 }
 @media (prefers-reduced-motion: reduce) { .landing-reveal { animation: none; } }
+
+.agenda-actions { display: flex; flex-wrap: wrap; gap: 6px; min-width: 190px; }
+.action-placeholder { color: var(--app-muted); font: 500 9px 'IBM Plex Mono', monospace; }
+.button-danger { color: #fff8f5; background: var(--app-danger); box-shadow: 4px 4px 0 #e8b3a6; }
+.button-danger:hover { background: #a94f43; transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #e8b3a6; }
+.button-danger:disabled { opacity: .55; cursor: wait; transform: none; }
+.modal-context, .confirmation-copy p { margin: 0; color: var(--app-muted); font-size: 12px; line-height: 1.65; }
+.confirmation-copy { display: grid; gap: 10px; padding: 16px; border-left: 3px solid var(--app-danger); background: #fff4f1; }
