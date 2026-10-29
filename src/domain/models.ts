@@ -74,6 +74,13 @@ export type Appointment = {
   created_at: string
 }
 
+export type AvailabilitySlot = {
+  starts_at: string
+  ends_at: string
+  doctor_id: number
+  service_id: number
+}
+
 export type ClinicalNote = {
   id: number
   encounter_id: number

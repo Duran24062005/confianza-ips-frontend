@@ -1,6 +1,7 @@
 import type {
   Appointment,
   AuditEvent,
+  AvailabilitySlot,
   ClinicalNote,
   DashboardAnalytics,
   Dashboard,
@@ -23,6 +24,11 @@ export type CreateAppointmentInput = {
   site_id: number
   starts_at: string
   reason: string
+}
+
+export type RescheduleAppointmentInput = {
+  starts_at: string
+  reason?: string
 }
 
 export type UpdateUserInput = { full_name: string }
@@ -49,8 +55,10 @@ export interface ConfianzaApi {
   services(): Promise<Service[]>
   sites(): Promise<Site[]>
   appointments(): Promise<Appointment[]>
+  availability(doctorId: number, serviceId: number, date: string): Promise<AvailabilitySlot[]>
   createAppointment(payload: CreateAppointmentInput): Promise<Appointment>
   updateAppointmentStatus(id: number, status: Appointment['status']): Promise<Appointment>
+  rescheduleAppointment(id: number, payload: RescheduleAppointmentInput): Promise<Appointment>
   audit(): Promise<AuditEvent[]>
   clinicalNotes(patientId: number): Promise<ClinicalNote[]>
 }

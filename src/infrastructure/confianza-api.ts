@@ -3,6 +3,7 @@ import type {
   ConfianzaApi,
   CreateAppointmentInput,
   CreatePatientInput,
+  RescheduleAppointmentInput,
 } from '../application/ports'
 import type {
   Appointment,
@@ -18,6 +19,7 @@ import type {
   Site,
   User,
   AgentActivationCode,
+  AvailabilitySlot,
 } from '../domain/models'
 import { HttpClient } from './http-client'
 
@@ -95,6 +97,11 @@ export class ConfianzaApiClient implements ConfianzaApi {
     return this.http.request('/appointments')
   }
 
+  availability(doctorId: number, serviceId: number, date: string): Promise<AvailabilitySlot[]> {
+    const query = new URLSearchParams({ doctor_id: String(doctorId), service_id: String(serviceId), date })
+    return this.http.request(`/availability?${query.toString()}`)
+  }
+
   createAppointment(payload: CreateAppointmentInput): Promise<Appointment> {
     return this.http.request('/appointments', { method: 'POST', body: JSON.stringify(payload) })
   }
@@ -103,6 +110,13 @@ export class ConfianzaApiClient implements ConfianzaApi {
     return this.http.request(`/appointments/${id}/status`, {
       method: 'POST',
       body: JSON.stringify({ status }),
+    })
+  }
+
+  rescheduleAppointment(id: number, payload: RescheduleAppointmentInput): Promise<Appointment> {
+    return this.http.request(`/appointments/${id}/reschedule`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
     })
   }
 
